@@ -10,7 +10,7 @@ h = [
   1 1 1;
 ]/9;
 
-seqs_stand = chopSequence(data_sit.data,10);
+seqs_stand = chopSequence(data_stand.data,10);
 numSeq = size(seqs_stand,1);
 for i = 1:numSeq
     sample = squeeze(seqs_stand(i,:,:,:));
