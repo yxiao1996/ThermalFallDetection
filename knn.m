@@ -63,6 +63,21 @@ classdef knn
             acc = count / numPoint;
         end
         
+        function vizDistance(obj,feats)
+            train = cat(1,obj.class1,obj.class2);
+            dists = zeros(size(feats,1),size(train,1));
+            for i = 1:size(feats,1)
+                x = feats(i,:);
+                for j = 1:size(train,1)
+                    x_train = train(j,:);
+                    dists(i,j) = obj.EclidDistance(x,x_train);
+                end
+            end
+            mesh(dists);
+            ylabel("features");
+            xlabel("training data");
+        end
+        
         function d = EclidDistance(obj,x1,x2)
             vec = x2(:) - x1(:);
             d = sqrt(dot(vec,vec));
