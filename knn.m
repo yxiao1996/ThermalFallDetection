@@ -17,7 +17,7 @@ classdef knn
             obj.k = k;
         end
         
-        function consensus = classify(obj,x)
+        function y = classify(obj,x)
             % classify new data point according to its neighbors
             numClass1 = size(obj.class1,1);
             numClass2 = size(obj.class2,1);
@@ -28,6 +28,7 @@ classdef knn
                 x = x(:);
                 dists(i) = obj.EclidDistance(x,x_train);
             end
+            %disp(dists');
             max_val = max(dists);
             consensus = zeros(obj.k,1);
             for i = 1:obj.k
@@ -40,6 +41,26 @@ classdef knn
                 end
                 dists(min_idx) = max_val;
             end
+            num_1s = length(find(consensus == 1));
+            num_2s = length(find(consensus == 2));
+            if (num_1s >= num_2s)
+                y = 1;
+            else
+                y = 2;
+            end
+        end
+        
+        function acc = test(obj,feats,class) 
+            numPoint = size(feats,1);
+            count = 0;
+            for i = 1:numPoint
+                x = feats(i,:);
+                y = obj.classify(x);
+                if (y == class)
+                    count = count + 1;
+                end
+            end
+            acc = count / numPoint;
         end
         
         function d = EclidDistance(obj,x1,x2)
