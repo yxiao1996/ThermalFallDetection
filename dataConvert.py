@@ -11,7 +11,7 @@ def stringToDouble(stringData):
         doubleData.append(float(s))
     return doubleData
 
-data_fn = "data_stand"
+data_fn = "data_fist"
 data = stringToDouble(parseString(open("./data/"+data_fn+".txt").read()))
 view = False
 

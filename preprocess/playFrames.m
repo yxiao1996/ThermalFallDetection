@@ -6,7 +6,7 @@ function playFrames(frames,figureId)
         max_val = max(max(img));
         min_val = min(min(img));
         img_norm = (img - min_val) / (max_val - min_val);
-        img_norm = lowpass(img_norm);
+        %img_norm = lowpass(img_norm);
         img = imresize(img_norm,10);
         imshow(img);
         pause(0.01);
