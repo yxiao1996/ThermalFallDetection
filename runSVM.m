@@ -1,8 +1,8 @@
 clear all
 close all
 
-data_1 = load("data_stand.mat");
-data_2 = load("data_sit.mat");
+data_1 = load("data_walk0.mat");
+data_2 = load("data_squat0.mat");
 nTrain = 100;
 nTest = 50;
 k = 7;

@@ -17,6 +17,6 @@ numSeq = size(seqs,1);
 for i = 1:numSeq
     sample = squeeze(seqs(i,:,:,:));
     sample = subtractMedian(sample);
-    %sample = computeSilhouette(sample,0.8);
+    sample = computeSilhouette(sample,0.8);
     playFrames(sample,1);
 end
