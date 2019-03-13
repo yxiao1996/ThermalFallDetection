@@ -1,24 +1,30 @@
 clear all
 close all
 
-data_1 = load("data_walk0.mat");
-data_2 = load("data_squat0.mat");
-nTrain = 100;
-nTest = 50;
-k = 7;
+walk_1 = load("data_walk0.mat");
+squat_1 = load("data_squat0.mat");
+walk_2 = load("data_walk1.mat");
+squat_2 = load("data_squat1.mat");
+nTrain = 200;
+nTest = 100;
 %% prepare training data
-class1 = data_1.data(1:nTrain,:,:);
-class2 = data_2.data(1:nTrain,:,:);
-class1 = lowpassFilter(class1);
-class2 = lowpassFilter(class2);
-feat1 = naiveFeature(class1);
-feat2 = naiveFeature(class2);
+data_1 = mergeSequence(walk_1.data,walk_2.data);
+data_2 = mergeSequence(squat_1.data,squat_2.data);
+class1 = shuffle(data_1);
+class2 = shuffle(data_2);
+
+train1 = class1(1:nTrain,:,:);
+train2 = class2(1:nTrain,:,:);
+train1 = lowpassFilter(train1);
+train2 = lowpassFilter(train2);
+feat1 = naiveFeature(train1);
+feat2 = naiveFeature(train2);
 cov1 = seqCovariance(feat1);
 cov2 = seqCovariance(feat2);
 
 %% prepare test data
-t_1 = data_1.data(nTrain:nTrain+nTest,:,:);
-t_2 = data_2.data(nTrain:nTrain+nTest,:,:);
+t_1 = class1(nTrain:nTrain+nTest,:,:);
+t_2 = class2(nTrain:nTrain+nTest,:,:);
 t_1 = lowpassFilter(t_1);
 t_2 = lowpassFilter(t_2);
 f_1 = naiveFeature(t_1);

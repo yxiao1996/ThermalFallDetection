@@ -1,18 +1,18 @@
 clear all
 close all
 
-walk_1 = load("data_walk0.mat");
-squat_1 = load("data_squat0.mat");
-walk_2 = load("data_walk1.mat");
+walk_1 = load("data_walk1.mat");
 squat_2 = load("data_squat1.mat");
-nTrain = 200;
-nTest = 100;
+wal_3 = load("data_walk2.mat");
+data_4 = load("data_squat2.mat");
+nTrain = 100;
+nTest = 50;
 k = 7;
 %% prepare training data
-data_1 = mergeSequence(walk_1.data,walk_2.data);
-data_2 = mergeSequence(squat_1.data,squat_2.data);
-class1 = shuffle(data_1);
-class2 = shuffle(data_2);
+class1 = shuffle(data_1.data);
+class2 = shuffle(data_2.data);
+%class1 = data_1.data;
+%class2 = data_2.data;
 
 train1 = class1(1:nTrain,:,:);
 train2 = class2(1:nTrain,:,:);
