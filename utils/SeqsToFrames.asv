@@ -1,0 +1,4 @@
+function frames = SeqsToFrames(seqs)
+%SEQSTOFRAMES t
+end
+

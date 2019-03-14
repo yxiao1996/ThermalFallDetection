@@ -1,6 +1,0 @@
-function label = labelSequence(seq)
-%labelSequence play the sequence and wait for a label
-    playFrames(seq,1);
-    label = input("ener the class label: ");
-end
-
