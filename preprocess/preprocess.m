@@ -18,6 +18,6 @@ for i = 1:numSeq
     sample = squeeze(seqs(i,:,:,:));
     sample = clusterSequence(sample);
     %sample = subtractMedian(sample);
-    %sample = computeSilhouette(sample,0.8);
+    sample = computeSilhouette(sample,0);
     playFrames(sample,1);
 end

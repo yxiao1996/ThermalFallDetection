@@ -8,7 +8,7 @@ function silFrames = computeSilhouette(frames,thresh)
         silFrame = zeros(numRow,numCol);
         for j = 1:numRow
             for k = 1:numCol
-                if (frames(i,j,k) < thresh)
+                if (frames(i,j,k) > thresh)
                     silFrame(j,k) = 1;
                 else
                     silFrame(j,k) = 0;
