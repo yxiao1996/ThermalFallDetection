@@ -24,9 +24,8 @@ classdef knn
             train = cat(1,obj.class1,obj.class2);
             dists = zeros(size(train,1),1);
             for i = 1:size(train,1)
-                x_train = train(i,:);
-                x = x(:);
-                dists(i) = obj.EclidDistance(x,x_train);
+                x_train = squeeze(train(i,:,:));
+                dists(i) = obj.EuclidDistance(x,x_train);
             end
             %disp(dists');
             max_val = max(dists);
@@ -54,7 +53,7 @@ classdef knn
             numPoint = size(feats,1);
             count = 0;
             for i = 1:numPoint
-                x = feats(i,:);
+                x = squeeze(feats(i,:,:));
                 y = obj.classify(x);
                 if (y == class)
                     count = count + 1;
@@ -67,10 +66,10 @@ classdef knn
             train = cat(1,obj.class1,obj.class2);
             dists = zeros(size(feats,1),size(train,1));
             for i = 1:size(feats,1)
-                x = feats(i,:);
+                x = squeeze(feats(i,:,:));
                 for j = 1:size(train,1)
-                    x_train = train(j,:);
-                    dists(i,j) = obj.EclidDistance(x,x_train);
+                    x_train = squeeze(train(j,:,:));
+                    dists(i,j) = obj.EuclidDistance(x,x_train);
                 end
             end
             mesh(dists);
@@ -78,8 +77,15 @@ classdef knn
             xlabel("training data");
         end
         
-        function d = EclidDistance(obj,x1,x2)
+        function d = EuclidDistance(obj,x1,x2)
             vec = x2(:) - x1(:);
+            d = sqrt(dot(vec,vec));
+        end
+        
+        function d = ManifoldDistance(obj,x1,x2)
+            log_x1 = logm(x1);
+            log_x2 = logm(x2);
+            vec = log_x2(:) - log_x1(:);
             d = sqrt(dot(vec,vec));
         end
     end
