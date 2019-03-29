@@ -19,7 +19,7 @@ for i = 1:numSeq
     sample = clusterSequence(sample);
     %sample = subtractMedian(sample);
     sample = computeSilhouette(sample,0);
-    sample_d = Markov1stDenoise(sample,600);
-    playFrames(sample,1);
+    sample_d = Markov1stDenoise(sample,5000);
+    %playFrames(sample,1);
     playFrames(sample_d,2);
 end
