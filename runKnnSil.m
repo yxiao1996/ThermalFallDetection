@@ -28,7 +28,7 @@ feat1 = silhouetteFeature(train1);
 feat2 = silhouetteFeature(train2);
 cov1 = seqCovariance(feat1);
 cov2 = seqCovariance(feat2); % [n,3,3]
-model = knn(cov1,cov2,k);
+model = knn2class(cov1,cov2,k);
 %% prepare test data
 t_1 = class1(nTrain1:nTrain1+nTest1,:,:);
 t_2 = class2(nTrain2:nTrain2+nTest2,:,:);
