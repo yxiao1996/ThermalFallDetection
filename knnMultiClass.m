@@ -24,6 +24,7 @@ classdef knnMultiClass
                 numSamples(i) = size(t,1);
             end
             numTotal = sum(numSamples);
+            obj.numSamples = numSamples;
             obj.TrainData = zeros(numTotal,numRows,numCols);
             % copy all training sample into TrainData
             idx = 1;
@@ -37,12 +38,13 @@ classdef knnMultiClass
             end
             % compute intervals for each class
             obj.intervals = zeros(m,2);
-            obj.intervals(1,:) = [1 obj.numSamples(1)];
+            obj.intervals(1,:) = [1 numSamples(1)];
             for i = 2:m
                 st = obj.intervals(i-1,2) + 1;
-                ed = st + obj.numSamples(i) - 1;
+                ed = st + numSamples(i) - 1;
                 obj.intervals(i,:) = [st ed];
             end
+            
         end
         
         function y = classify(obj,x)
@@ -60,7 +62,7 @@ classdef knnMultiClass
                 for j = 1:obj.m
                     intvl = obj.intervals(j,:);
                     st = intvl(1); ed = intvl(2);
-                    if(min_idx>=st && min_idx<=ed)
+                    if((min_idx(1)>=st) && (min_idx(1)<=ed))
                         consensus(i) = j;
                         dists(min_idx) = max_val;
                         break;

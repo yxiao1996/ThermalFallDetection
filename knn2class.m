@@ -1,4 +1,4 @@
-classdef knn
+classdef knn2class
     %KNN 
     % a K-Nearest-Neighbor model to classify images (2 classes)
     
@@ -9,7 +9,7 @@ classdef knn
     end
     
     methods
-        function obj = knn(class1,class2,k)
+        function obj = knn2class(class1,class2,k)
             %KNN 
             % Construct a KNN model
             obj.class1 = class1;
