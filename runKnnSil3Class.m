@@ -1,3 +1,5 @@
+%% 3 Class KNN model classifying 3 postures
+% 1 for standing, 2 for squatting and 3 for sitting
 clear all
 close all
 
@@ -58,11 +60,9 @@ c_1 = seqCovariance(f_1);
 c_2 = seqCovariance(f_2);
 c_3 = seqCovariance(f_3);
 %% Test model
-disp("test class 1 accuracy");
-disp(model.test(c_1,1));
-
-disp("test class 2 accuracy");
-disp(model.test(c_2,2));
-
-disp("test class 3 accuracy");
-disp(model.test(c_3,3));
+test = cell(3,1);
+test{1} = c_1;
+test{2} = c_2;
+test{3} = c_3;
+disp("Confusion Matrix of test data");
+disp(model.ConfusionMatrix(test));

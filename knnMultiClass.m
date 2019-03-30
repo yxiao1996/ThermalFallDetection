@@ -92,6 +92,20 @@ classdef knnMultiClass
             acc = count / numPoint;
         end
         
+        function confMat = ConfusionMatrix(obj,test)
+            confMat = zeros(obj.m); % m-by-m confusion matrix
+            for i = 1:obj.m
+                data = test{i};
+                numPoints = size(data,1);
+                for j = 1:numPoints
+                    x = squeeze(data(j,:,:));
+                    y = obj.classify(x);
+                    confMat(i,y) = confMat(i,y) + 1; 
+                end
+                confMat(i,:) = confMat(i,:)/numPoints;
+            end
+        end
+        
         function d = EuclidDistance(obj,x1,x2)
             vec = x2(:) - x1(:);
             d = sqrt(dot(vec,vec));
