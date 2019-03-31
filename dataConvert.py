@@ -11,7 +11,7 @@ def stringToDouble(stringData):
         doubleData.append(float(s))
     return doubleData
 
-data_fn = "data_walk1"
+data_fn = "data_fall4"
 data = stringToDouble(parseString(open("./data/"+data_fn+".txt").read()))
 view = False
 
@@ -34,4 +34,4 @@ if (view):
         cv2.imshow('frame',demo_frame)
         cv2.waitKey(100)
 else:
-    scipy.io.savemat(data_fn+'.mat',mdict={'data':frames})
+    scipy.io.savemat("./data/"+data_fn+'.mat',mdict={'data':frames})

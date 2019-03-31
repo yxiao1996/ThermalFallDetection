@@ -5,13 +5,13 @@ close all
 
 walk = load("walk.mat");
 squat = load("squat.mat");
-sit = load("sit.mat");
+fall = load("fall.mat");
 trainRatio = 0.8;
 k = 5;
 %% prepare training data
 class1 = SeqsToFrames(walk.walk);
 class2 = SeqsToFrames(squat.squat);
-class3 = SeqsToFrames(sit.sit);
+class3 = SeqsToFrames(fall.fall);
 class1 = shuffle(class1);
 class2 = shuffle(class2);
 class3 = shuffle(class3);
