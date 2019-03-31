@@ -57,12 +57,13 @@ classdef knnMultiClass
             consensus = zeros(obj.k,1);
             for i = 1:obj.k
                 min_val = min(dists);
-                min_idx = find(dists==min_val);
+                min_idxs = find(dists==min_val);
+                min_idx = min_idxs(1);
                 % find which interval does this index falls in
                 for j = 1:obj.m
                     intvl = obj.intervals(j,:);
                     st = intvl(1); ed = intvl(2);
-                    if((min_idx(1)>=st) && (min_idx(1)<=ed))
+                    if((min_idx>=st) && (min_idx<=ed))
                         consensus(i) = j;
                         dists(min_idx) = max_val;
                         break;
@@ -109,6 +110,18 @@ classdef knnMultiClass
         function d = EuclidDistance(obj,x1,x2)
             vec = x2(:) - x1(:);
             d = sqrt(dot(vec,vec));
+        end
+        
+        function d = ManifoldDistance(obj,x1,x2)
+            x1_ = logm(x1);
+            x2_ = logm(x2);
+            d = obj.EuclidDistance(x1_,x2_);
+        end
+        
+        function d = EigenDistance(obj,x1,x2)
+            e1 = eig(x1);
+            e2 = eig(x2);
+            d = obj.EuclidDistance(log(e1),log(e2));
         end
     end
 end
