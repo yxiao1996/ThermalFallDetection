@@ -1,6 +1,6 @@
 %% view dataset in sequence
-data = load("fall.mat");
-seqs = data.fall;
+data = load("squat.mat");
+seqs = data.squat;
 numSeq = size(seqs,1);
 for i = 1:numSeq
     sample = squeeze(seqs(i,:,:,:));
