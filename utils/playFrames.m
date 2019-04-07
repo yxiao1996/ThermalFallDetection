@@ -9,6 +9,7 @@ function playFrames(frames,figureId)
         %img_norm = lowpass(img_norm);
         img = imresize(img_norm,10);
         imshow(img);
-        %pause(0.005);
+        colormap parula;
+        pause(0.005);
     end
 end

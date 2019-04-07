@@ -10,6 +10,15 @@ function clusters = clusterSequence(seq,T)
 end
 function body = clusterFrame(f,T)
     f_single = im2single(f);
+    numCol = 2;
+    pxl_labels = imsegkmeans(f_single,numCol,'NumAttempts',7);
+    masks = zeros(size(f,1),size(f,2));
+    masks(find(f>T))=1;
+    mask_i = (pxl_labels == 1);
+    masks = masks.*double(mask_i);
+    body=f.*masks;
+    
+    
     numCol = 3;
     pxl_labels = imsegkmeans(f_single,numCol,'NumAttempts',7);
     masks = zeros(numCol,size(f,1),size(f,2));
@@ -20,9 +29,9 @@ function body = clusterFrame(f,T)
         mean_temp(i) = mean_temperature(mask_i,f);
     end
     max_idx = find(mean_temp==max(mean_temp));
-    T_mask = zeros(size(f,1),size(f,2));
-    T_mask(find(f>T))=1;
-    body = f .* squeeze(masks(max_idx(1),:,:)).*T_mask;
+    body = f .* squeeze(masks(max_idx(1),:,:));
+    
+    
 end
 
 function mt = mean_temperature(mask,f)
