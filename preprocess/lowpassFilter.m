@@ -3,17 +3,7 @@ function filtFrames = lowpassFilter(frames)
     filtFrames = zeros(size(frames));
     for i = 1:numFrame
         frame = squeeze(frames(i,:,:));
-        flt = lowpass(frame);
+        flt = medfilt2(frame,[3 3]);  %output pixel contains the median value in the 3-by-3 neighborhood
         filtFrames(i,:,:) = flt;
     end
-end
-
-function filtered=lowpass(original)
-    [m,n]=size(original); 
-    Y=dct2(original); 
-    I=zeros(m,n);
-    I(1:round(0.5*m),1:round(0.5*n))=1; 
-    Ydct=Y.*I;
-    Y=idct2(Ydct); 
-    filtered = Y;
 end
