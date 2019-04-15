@@ -64,5 +64,8 @@ test = cell(3,1);
 test{1} = c_1;
 test{2} = c_2;
 test{3} = c_3;
-disp("Confusion Matrix of test data");
-disp(model.ConfusionMatrix(test));
+
+disp("Accuracy and Confusion Matrix of test data");
+[acc,cm] = model.ConfusionMatrix(test);
+disp(acc);
+disp(cm);

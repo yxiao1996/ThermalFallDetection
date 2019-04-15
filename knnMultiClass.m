@@ -51,7 +51,7 @@ classdef knnMultiClass
             dists = zeros(size(obj.TrainData,1),1);
             for i = 1:size(obj.TrainData,1)
                 x_train = squeeze(obj.TrainData(i,:,:));
-                dists(i) = obj.EuclidDistance(x,x_train);
+                dists(i) = obj.EigenDistance(x,x_train);
             end
             max_val = max(dists);
             consensus = zeros(obj.k,1);
@@ -93,8 +93,9 @@ classdef knnMultiClass
             acc = count / numPoint;
         end
         
-        function confMat = ConfusionMatrix(obj,test)
+        function [acc,confMat] = ConfusionMatrix(obj,test)
             confMat = zeros(obj.m); % m-by-m confusion matrix
+            acc = zeros(3,1);
             for i = 1:obj.m
                 data = test{i};
                 numPoints = size(data,1);
@@ -102,8 +103,12 @@ classdef knnMultiClass
                     x = squeeze(data(j,:,:));
                     y = obj.classify(x);
                     confMat(i,y) = confMat(i,y) + 1; 
+                    if(y==i)
+                        acc(i) = acc(i) + 1;
+                    end
                 end
                 confMat(i,:) = confMat(i,:)/numPoints;
+                acc(i) = acc(i)/numPoints;
             end
         end
         
@@ -119,9 +124,9 @@ classdef knnMultiClass
         end
         
         function d = EigenDistance(obj,x1,x2)
-            e1 = eig(x1);
-            e2 = eig(x2);
-            d = obj.EuclidDistance(log(e1),log(e2));
+            e = eig(x1,x2);
+            ln_e = log(e);
+            d = sqrt(sum(dot(ln_e,ln_e)));
         end
     end
 end
