@@ -6,16 +6,21 @@ function features = silhouetteFeature(frames)
     numFrame = size(frames,1);
     numRow = size(frames,2);
     numCol = size(frames,3);
-    features = zeros(numFrame,numRow,numCol,6);
+    features = zeros(numFrame,numRow,numCol,10);
     for i = 1:numFrame
         f = squeeze(frames(i,:,:));
         for y = 1:numRow
             for x = 1:numCol
+                %disp("*");
                 dN = compute_dN(y,x,f,thresh);
                 dS = compute_dS(y,x,f,thresh);
                 dE = compute_dE(y,x,f,thresh);
                 dW = compute_dW(y,x,f,thresh);
-                features(i,y,x,:) = [x y dN dE dW dS];
+                dNE = compute_dD(y,x,f,thresh,true,true);
+                dSE = compute_dD(y,x,f,thresh,false,true);
+                dSW = compute_dD(y,x,f,thresh,false,false);
+                dNW = compute_dD(y,x,f,thresh,true,false);
+                features(i,y,x,:) = [x y dN dE dW dS dNE dSE dSW dNW];
             end
         end
     end
@@ -36,7 +41,7 @@ function dN = compute_dN(y,x,f,thresh)
 end
 
 function dS = compute_dS(y,x,f,thresh)
-    % compute dN given x,y and the frame
+    % compute dS given x,y and the frame
     dS = 0;
     x_ = x; y_ = y;
     while(f(y_,x_)>thresh)
@@ -50,7 +55,7 @@ function dS = compute_dS(y,x,f,thresh)
 end
 
 function dE = compute_dE(y,x,f,thresh)
-    % compute dN given x,y and the frame
+    % compute dE given x,y and the frame
     dE = 0;
     x_ = x; y_ = y;
     while(f(y_,x_)>thresh)
@@ -64,7 +69,7 @@ function dE = compute_dE(y,x,f,thresh)
 end
 
 function dW = compute_dW(y,x,f,thresh)
-    % compute dN given x,y and the frame
+    % compute dW given x,y and the frame
     dW = 0;
     x_ = x; y_ = y;
     %disp(x_);
@@ -78,3 +83,31 @@ function dW = compute_dW(y,x,f,thresh)
     end
 end
 
+function dD = compute_dD(y,x,f,thresh,N,E)
+    dD = 0;
+    if(N)
+        dy = -1;
+    else
+        dy = 1;
+    end
+    if(E)
+        dx = 1;
+    else
+        dx = -1;
+    end
+    %dx = uint8(dx);
+    %dy = uint8(dy);
+    x_ = x; y_ = y;
+    [m,n] = size(f);
+    while(f(y_,x_)>thresh)
+        dD = dD + 1;
+        x_ = x_ + dx;
+        y_ = y_ + dy;
+        if(x_ <= 1 || y_ <= 1)
+            break;
+        end
+        if(x_ >= n || y_ >= m)
+            break;
+        end
+    end
+end
