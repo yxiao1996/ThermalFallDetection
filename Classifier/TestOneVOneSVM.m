@@ -1,4 +1,4 @@
-load("svmp1c5.mat")
+load("svm_rbf.mat")
 load("TrainTest0.mat"); % load data
 TestFeature = data.TestFeature;
 TestLabel = data.TestLabel;

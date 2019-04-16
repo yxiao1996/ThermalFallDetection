@@ -118,13 +118,10 @@ classdef KernelSVM
         end
         
         function val = k(obj,x1,x2)
-            % no kernel
-            %val = dot(obj.phi(x1),obj.phi(x2));
-            % sigmoid kernel
-            %val = obj.sigmoid(dot(obj.phi(x1),obj.phi(x2)));
             % polynomial kernel
-            %val = dot(obj.polynomial(x1'),obj.polynomial(x2'));
-            val = (dot(x1,x2) + 1)^1;
+            % val = (dot(x1,x2) + 1)^1;
+            % radical basis kernel
+            val = exp(-2*dot(x2(:)-x1(:),x2(:)-x1(:)));
         end
         
         function p = polynomial(obj,x)
