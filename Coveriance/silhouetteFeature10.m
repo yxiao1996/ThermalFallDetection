@@ -1,4 +1,4 @@
-function features = silhouetteFeature(frames)
+function features = silhouetteFeature10(frames)
 %SILHOUETTEFEATURE compute silhouette feature of a sequence of frames
     thresh = 0.5;
     frames = clusterSequence(frames);
@@ -6,7 +6,7 @@ function features = silhouetteFeature(frames)
     numFrame = size(frames,1);
     numRow = size(frames,2);
     numCol = size(frames,3);
-    features = zeros(numFrame,numRow,numCol,6);
+    features = zeros(numFrame,numRow,numCol,10);
     for i = 1:numFrame
         f = squeeze(frames(i,:,:));
         for y = 1:numRow
@@ -16,7 +16,11 @@ function features = silhouetteFeature(frames)
                 dS = compute_dS(y,x,f,thresh);
                 dE = compute_dE(y,x,f,thresh);
                 dW = compute_dW(y,x,f,thresh);
-                features(i,y,x,:) = [x y dN dE dW dS];
+                dNE = compute_dD(y,x,f,thresh,true,true);
+                dSE = compute_dD(y,x,f,thresh,false,true);
+                dSW = compute_dD(y,x,f,thresh,false,false);
+                dNW = compute_dD(y,x,f,thresh,true,false);
+                features(i,y,x,:) = [x y dN dE dW dS dNE dSE dSW dNW];
             end
         end
     end
