@@ -1,6 +1,6 @@
 %% multi-class svm using one-versus-one scheme
 clear
-load("TrainTest0.mat"); % load data
+load("TrainTest1.mat"); % load data
 numTest = 50;
 classifiers = cell(3,3);
 TrainFeature = data.TrainFeature;
@@ -10,8 +10,8 @@ for i = 0:1
         disp(i);
         oneIdx = find(TrainLabel == i);
         otherIdx = find(TrainLabel == j);
-        oneFeat = TrainFeature(oneIdx,:);
-        otherFeat = TrainFeature(otherIdx,:);
+        oneFeat = TrainFeature(oneIdx,:,:);
+        otherFeat = TrainFeature(otherIdx,:,:);
         oneLabel = ones(size(oneFeat,1),1);
         otherLabel = -ones(size(otherFeat,1),1);
         Feat = [oneFeat;otherFeat];

@@ -1,4 +1,4 @@
-function  covariances = seqCovariance(features)
+function  covariances = silhouetteCovariance(features)
 %SEQCOVERIANCE 
 % compute the coveriance matrix given a vector field
     numFrame = size(features,1);

@@ -28,8 +28,8 @@ classdef KernelSVM
                     % ti*tj*k(xi,xj)
                     ti = label(i);
                     tj = label(j);
-                    xi = feature(i,:);
-                    xj = feature(j,:);
+                    xi = feature(i,:,:);
+                    xj = feature(j,:,:);
                     H(i,j) = ti*tj*obj.k(xi,xj);
                     H(j,i) = H(i,j);
                 end
@@ -122,6 +122,12 @@ classdef KernelSVM
             % val = (dot(x1,x2) + 1)^1;
             % radical basis kernel
             val = exp(-2*dot(x2(:)-x1(:),x2(:)-x1(:)));
+            % eigen distance kernel
+            %if(x1==x2)
+            %    val = 1;
+            %else
+            %    val = obj.EigenDistance(squeeze(x1),squeeze(x2));
+            %end
         end
         
         function p = polynomial(obj,x)
@@ -151,6 +157,12 @@ classdef KernelSVM
         
         function val = sigmoid(obj,x)
             val = 1/(1+exp(-x));
+        end
+        
+        function d = EigenDistance(obj,x1,x2)
+            e = eig(x1,x2);
+            ln_e = log(e);
+            d = sqrt(sum(dot(ln_e,ln_e)));
         end
     end
 end
