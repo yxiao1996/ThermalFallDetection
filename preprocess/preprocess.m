@@ -2,7 +2,7 @@ clear all
 close all
 %% preprocess the raw thermal sensor readings
 data_1 = load("data_hand.mat");
-data_2 = load("sit.mat");
+data_2 = load("topFall.mat");
 
 h = [
   1 1 1;
@@ -10,7 +10,7 @@ h = [
   1 1 1;
 ]/9;
 
-test_data = data_2.c2;
+test_data = data_2.fall;
 test_data = lowpassFilter(test_data);
 seqs = chopSequence(test_data,10);
 numSeq = size(seqs,1);

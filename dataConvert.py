@@ -11,9 +11,9 @@ def stringToDouble(stringData):
         doubleData.append(float(s))
     return doubleData
 
-data_fn = "top_fall1"
+data_fn = "top_squat1"
 data = stringToDouble(parseString(open("./data/"+data_fn+".txt").read()))
-view = True
+view = False
 
 frames = []
 numFrames = int(len(data)/(24*32))

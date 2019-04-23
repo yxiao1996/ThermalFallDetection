@@ -1,15 +1,17 @@
 clear all
 close all
 
-walk = load("walk.mat");
-squat = load("squat.mat");
+topWalk = load("topWalk.mat");
+topFall = load("topFall.mat");
 trainRatio = 0.8;
-k = 5;
+k = 7;
 %% prepare training data
-class1 = SeqsToFrames(walk.walk);
-class2 = SeqsToFrames(squat.squat);
+class1 = SeqsToFrames(topWalk.walk);
+class2 = SeqsToFrames(topFall.fall);
 class1 = shuffle(class1);
 class2 = shuffle(class2);
+class1 = subtractMedian(class1);
+class2 = subtractMedian(class2);
 
 numPoints = size(class1,1)+size(class2,1);
 class1Ratio = size(class1,1) / numPoints;

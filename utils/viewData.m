@@ -1,10 +1,12 @@
 %% view dataset in sequence
-data = load("fall.mat");
+data = load("topFall.mat");
 seqs = data.fall;
-numSeq = size(seqs,1);
-for i = 1:numSeq
-    sample = squeeze(seqs(i,:,:,:));
-    %sample = lowpassFilter(sample);
+frames = SeqsToFrames(seqs);
+frames = subtractMedian(frames);
+numF = size(frames,1);
+for i = 1:numF
+    sample = frames(i,:,:);
+    sample = lowpassFilter(sample);
     %sample = clusterSequence(sample);
     %sample = subtractMedian(sample);
     %sample = computeSilhouette(sample,0);
